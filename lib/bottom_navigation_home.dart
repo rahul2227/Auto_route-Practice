@@ -15,6 +15,7 @@ class BottomNavigationHome extends StatelessWidget {
         centerTitle: true,
         leading: const AutoBackButton(),
       ),
+      backgroundColor: Colors.indigo,
       routes: const [
         PostsRouter(),
         UsersRouter(),

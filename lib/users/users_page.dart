@@ -12,8 +12,8 @@ class UsersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final users = User.users;
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: ListView(
+        //mainAxisAlignment: MainAxisAlignment.center,
         children: [
           for (int i = 0; i < users.length; i++)
             UserAvatar(
