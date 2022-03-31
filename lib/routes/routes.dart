@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 
+// import '../auth/email_page.dart';
+// import '../auth/login_wrapper.dart';
+// import '../auth/passwords_page.dart';
 import '../posts/posts_page.dart';
 import '../posts/single_post_page.dart';
 import '../settings/settings_page.dart';
@@ -35,7 +38,15 @@ import '../bottom_navigation_home.dart';
           path: 'settings',
           name: 'SettingsRouter',
           page: SettingsPage,
-        )
+        ),
+        // AutoRoute(
+        //   path: '/login',
+        //   page: LoginWrapperPage,
+        //   children: [
+        //     AutoRoute(page: EmailPage),
+        //     AutoRoute(page: PasswordPage),
+        //   ],
+        // )
       ],
     ),
   ],
