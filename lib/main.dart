@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../routes/routes.gr.dart';
 
-void main() => runApp(AppWidget());
+void main() {
+  runApp(AppWidget());
+}
 
 class AppWidget extends StatelessWidget {
   final _appRouter = NavigationRouter();
