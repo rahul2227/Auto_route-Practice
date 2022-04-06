@@ -14,9 +14,9 @@ class PostsPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
+          vertical: 20,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: [
             for (int i = 0; i < posts.length; i++)
               PostTile(

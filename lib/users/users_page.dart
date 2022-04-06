@@ -12,18 +12,20 @@ class UsersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final users = User.users;
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          for (int i = 0; i < users.length; i++)
-            UserAvatar(
-              avatarColor: users[i].color,
-              username: 'user${users[i].id}',
-              onAvatarTap: () => context.router.push(
-                UserProfileRoute(userId: users[i].id),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: ListView(
+          children: [
+            for (int i = 0; i < users.length; i++)
+              UserAvatar(
+                avatarColor: users[i].color,
+                username: 'user${users[i].id}',
+                onAvatarTap: () => context.router.push(
+                  UserProfileRoute(userId: users[i].id),
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

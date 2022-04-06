@@ -11,10 +11,11 @@ class BottomNavigationHome extends StatelessWidget {
     return AutoTabsScaffold(
       appBarBuilder: (context, tabsRouter) => AppBar(
         title: const Text('Router demo'),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.deepPurple,
         centerTitle: true,
         leading: const AutoBackButton(),
       ),
+      backgroundColor: Colors.deepPurple,
       routes: const [
         PostsRouter(),
         UsersRouter(),
