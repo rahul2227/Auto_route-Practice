@@ -1,4 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/email_login.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/login_wrapper.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/password_login.dart';
 
 import '../posts/posts_page.dart';
 import '../posts/single_post_page.dart';
@@ -38,6 +41,14 @@ import '../bottom_navigation_home.dart';
         )
       ],
     ),
+    AutoRoute(
+      path: '/login',
+      page: LoginWrapperPage,
+      children: [
+        AutoRoute(page: EmailLoginPage),
+        AutoRoute(page: PasswordLoginPage),
+      ],
+    )
   ],
   replaceInRouteName: 'Page,Route',
 )
