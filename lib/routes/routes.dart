@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/email_login.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/login_wrapper.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/password_login.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/posts/invalid_post.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/posts/post_guard.dart';
 
 import '../posts/posts_page.dart';
 import '../posts/single_post_page.dart';
@@ -22,7 +24,15 @@ import '../bottom_navigation_home.dart';
           page: EmptyRouterPage,
           children: [
             AutoRoute(path: '', page: PostsPage),
-            AutoRoute(path: ':postId', page: SinglePostPage),
+            AutoRoute(
+              path: ':postId',
+              guards: [PostGuard],
+              page: SinglePostPage,
+            ),
+            AutoRoute(
+              path: 'invalidPostRoute',
+              page: InvalidPostPage,
+            ),
           ],
         ),
         AutoRoute(

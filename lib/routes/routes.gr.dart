@@ -11,21 +11,27 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i3;
-import 'package:flutter/material.dart' as _i11;
+import 'package:flutter/material.dart' as _i12;
 
-import '../auth/email_login.dart' as _i9;
+import '../auth/email_login.dart' as _i10;
 import '../auth/login_wrapper.dart' as _i2;
-import '../auth/password_login.dart' as _i10;
+import '../auth/password_login.dart' as _i11;
 import '../bottom_navigation_home.dart' as _i1;
+import '../posts/invalid_post.dart' as _i7;
+import '../posts/post_guard.dart' as _i13;
 import '../posts/posts_page.dart' as _i5;
 import '../posts/single_post_page.dart' as _i6;
 import '../settings/settings_page.dart' as _i4;
-import '../users/user_profile_page.dart' as _i8;
-import '../users/users_page.dart' as _i7;
+import '../users/user_profile_page.dart' as _i9;
+import '../users/users_page.dart' as _i8;
 
 class NavigationRouter extends _i3.RootStackRouter {
-  NavigationRouter([_i11.GlobalKey<_i11.NavigatorState>? navigatorKey])
+  NavigationRouter(
+      {_i12.GlobalKey<_i12.NavigatorState>? navigatorKey,
+      required this.postGuard})
       : super(navigatorKey);
+
+  final _i13.PostGuard postGuard;
 
   @override
   final Map<String, _i3.PageFactory> pagesMap = {
@@ -66,9 +72,13 @@ class NavigationRouter extends _i3.RootStackRouter {
           routeData: routeData,
           child: _i6.SinglePostPage(key: args.key, postId: args.postId));
     },
+    InvalidPostRoute.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i7.InvalidPostPage());
+    },
     UsersRoute.name: (routeData) {
       return _i3.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i7.UsersPage());
+          routeData: routeData, child: const _i8.UsersPage());
     },
     UserProfileRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -77,19 +87,19 @@ class NavigationRouter extends _i3.RootStackRouter {
               UserProfileRouteArgs(userId: pathParams.getInt('userId')));
       return _i3.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i8.UserProfilePage(key: args.key, userId: args.userId));
+          child: _i9.UserProfilePage(key: args.key, userId: args.userId));
     },
     EmailLoginRoute.name: (routeData) {
       final args = routeData.argsAs<EmailLoginRouteArgs>();
       return _i3.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i9.EmailLoginPage(key: args.key, onNext: args.onNext));
+          child: _i10.EmailLoginPage(key: args.key, onNext: args.onNext));
     },
     PasswordLoginRoute.name: (routeData) {
       final args = routeData.argsAs<PasswordLoginRouteArgs>();
       return _i3.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i10.PasswordLoginPage(key: args.key, onNext: args.onNext));
+          child: _i11.PasswordLoginPage(key: args.key, onNext: args.onNext));
     }
   };
 
@@ -103,7 +113,11 @@ class NavigationRouter extends _i3.RootStackRouter {
                 _i3.RouteConfig(PostsRoute.name,
                     path: '', parent: PostsRouter.name),
                 _i3.RouteConfig(SinglePostRoute.name,
-                    path: ':postId', parent: PostsRouter.name)
+                    path: ':postId',
+                    parent: PostsRouter.name,
+                    guards: [postGuard]),
+                _i3.RouteConfig(InvalidPostRoute.name,
+                    path: 'invalidPostRoute', parent: PostsRouter.name)
               ]),
           _i3.RouteConfig(UsersRouter.name,
               path: 'users',
@@ -139,7 +153,7 @@ class BottomNavigationHome extends _i3.PageRouteInfo<void> {
 /// [_i2.LoginWrapperPage]
 class LoginWrapperRoute extends _i3.PageRouteInfo<LoginWrapperRouteArgs> {
   LoginWrapperRoute(
-      {_i11.Key? key,
+      {_i12.Key? key,
       required dynamic Function(bool) onLogin,
       List<_i3.PageRouteInfo>? children})
       : super(LoginWrapperRoute.name,
@@ -153,7 +167,7 @@ class LoginWrapperRoute extends _i3.PageRouteInfo<LoginWrapperRouteArgs> {
 class LoginWrapperRouteArgs {
   const LoginWrapperRouteArgs({this.key, required this.onLogin});
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   final dynamic Function(bool) onLogin;
 
@@ -192,7 +206,7 @@ class SettingsRouter extends _i3.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.PostsPage]
 class PostsRoute extends _i3.PageRouteInfo<PostsRouteArgs> {
-  PostsRoute({_i11.Key? key})
+  PostsRoute({_i12.Key? key})
       : super(PostsRoute.name, path: '', args: PostsRouteArgs(key: key));
 
   static const String name = 'PostsRoute';
@@ -201,7 +215,7 @@ class PostsRoute extends _i3.PageRouteInfo<PostsRouteArgs> {
 class PostsRouteArgs {
   const PostsRouteArgs({this.key});
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -212,7 +226,7 @@ class PostsRouteArgs {
 /// generated route for
 /// [_i6.SinglePostPage]
 class SinglePostRoute extends _i3.PageRouteInfo<SinglePostRouteArgs> {
-  SinglePostRoute({_i11.Key? key, required int postId})
+  SinglePostRoute({_i12.Key? key, required int postId})
       : super(SinglePostRoute.name,
             path: ':postId',
             args: SinglePostRouteArgs(key: key, postId: postId),
@@ -224,7 +238,7 @@ class SinglePostRoute extends _i3.PageRouteInfo<SinglePostRouteArgs> {
 class SinglePostRouteArgs {
   const SinglePostRouteArgs({this.key, required this.postId});
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   final int postId;
 
@@ -235,7 +249,16 @@ class SinglePostRouteArgs {
 }
 
 /// generated route for
-/// [_i7.UsersPage]
+/// [_i7.InvalidPostPage]
+class InvalidPostRoute extends _i3.PageRouteInfo<void> {
+  const InvalidPostRoute()
+      : super(InvalidPostRoute.name, path: 'invalidPostRoute');
+
+  static const String name = 'InvalidPostRoute';
+}
+
+/// generated route for
+/// [_i8.UsersPage]
 class UsersRoute extends _i3.PageRouteInfo<void> {
   const UsersRoute() : super(UsersRoute.name, path: '');
 
@@ -243,9 +266,9 @@ class UsersRoute extends _i3.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.UserProfilePage]
+/// [_i9.UserProfilePage]
 class UserProfileRoute extends _i3.PageRouteInfo<UserProfileRouteArgs> {
-  UserProfileRoute({_i11.Key? key, required int userId})
+  UserProfileRoute({_i12.Key? key, required int userId})
       : super(UserProfileRoute.name,
             path: ':userId',
             args: UserProfileRouteArgs(key: key, userId: userId),
@@ -257,7 +280,7 @@ class UserProfileRoute extends _i3.PageRouteInfo<UserProfileRouteArgs> {
 class UserProfileRouteArgs {
   const UserProfileRouteArgs({this.key, required this.userId});
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   final int userId;
 
@@ -268,9 +291,9 @@ class UserProfileRouteArgs {
 }
 
 /// generated route for
-/// [_i9.EmailLoginPage]
+/// [_i10.EmailLoginPage]
 class EmailLoginRoute extends _i3.PageRouteInfo<EmailLoginRouteArgs> {
-  EmailLoginRoute({_i11.Key? key, required Function onNext})
+  EmailLoginRoute({_i12.Key? key, required Function onNext})
       : super(EmailLoginRoute.name,
             path: 'email-login-page',
             args: EmailLoginRouteArgs(key: key, onNext: onNext));
@@ -281,7 +304,7 @@ class EmailLoginRoute extends _i3.PageRouteInfo<EmailLoginRouteArgs> {
 class EmailLoginRouteArgs {
   const EmailLoginRouteArgs({this.key, required this.onNext});
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   final Function onNext;
 
@@ -292,9 +315,9 @@ class EmailLoginRouteArgs {
 }
 
 /// generated route for
-/// [_i10.PasswordLoginPage]
+/// [_i11.PasswordLoginPage]
 class PasswordLoginRoute extends _i3.PageRouteInfo<PasswordLoginRouteArgs> {
-  PasswordLoginRoute({_i11.Key? key, required Function onNext})
+  PasswordLoginRoute({_i12.Key? key, required Function onNext})
       : super(PasswordLoginRoute.name,
             path: 'password-login-page',
             args: PasswordLoginRouteArgs(key: key, onNext: onNext));
@@ -305,7 +328,7 @@ class PasswordLoginRoute extends _i3.PageRouteInfo<PasswordLoginRouteArgs> {
 class PasswordLoginRouteArgs {
   const PasswordLoginRouteArgs({this.key, required this.onNext});
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   final Function onNext;
 
