@@ -5,6 +5,9 @@ import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/pass
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/posts/invalid_post.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/posts/post_guard.dart';
 
+import '../orders/order_history_page.dart';
+import '../orders/order_page.dart';
+import '../orders/order_wrapper.dart';
 import '../posts/posts_page.dart';
 import '../posts/single_post_page.dart';
 import '../settings/settings_page.dart';
@@ -48,7 +51,24 @@ import '../bottom_navigation_home.dart';
           path: 'settings',
           name: 'SettingsRouter',
           page: SettingsPage,
-        )
+        ),
+        AutoRoute(
+          path: 'ordersWrapper',
+          name: 'OrdersWrapperPageRoute',
+          page: OrdersWrapperPage,
+          children: [
+            AutoRoute(
+              path: '',
+              name: 'OrderRoute',
+              page: OrderPage,
+            ),
+            AutoRoute(
+              path: 'orderHistory',
+              name: 'OrderHistoryRoute',
+              page: OrderHistory,
+            ),
+          ],
+        ),
       ],
     ),
     AutoRoute(
