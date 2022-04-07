@@ -1,4 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/Custom/custom_detail.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/Custom/custom_route.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/email_login.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/login_wrapper.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/password_login.dart';
@@ -69,6 +72,20 @@ import '../bottom_navigation_home.dart';
             ),
           ],
         ),
+        AutoRoute(
+          path: 'dialog',
+          name: 'DialogRouter',
+          page: EmptyRouterPage,
+          children: [
+            AutoRoute(path: '', page: CustomRouteWrapper),
+            CustomRoute(
+              page: CustomDetail,
+              name: 'CustomDetailRoute',
+              transitionsBuilder: zoomInTransition,
+              path: 'customDetail',
+            ),
+          ],
+        ),
       ],
     ),
     AutoRoute(
@@ -83,3 +100,10 @@ import '../bottom_navigation_home.dart';
   replaceInRouteName: 'Page,Route',
 )
 class $NavigationRouter {}
+
+Widget zoomInTransition(BuildContext context, Animation<double> animation,
+    Animation<double> secondaryAnimation, Widget child) {
+  // you get an animation object and a widget
+  // make your own transition
+  return ScaleTransition(scale: animation, child: child);
+}

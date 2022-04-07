@@ -20,7 +20,8 @@ class BottomNavigationHome extends StatelessWidget {
         PostsRouter(),
         UsersRouter(),
         SettingsRouter(),
-        OrdersWrapperPageRoute(),
+        //OrdersWrapperPageRoute(),
+        DialogRouter(),
       ],
       bottomNavigationBuilder: (_, tabsRoute) => SalomonBottomBar(
         currentIndex: tabsRoute.activeIndex,
@@ -54,13 +55,21 @@ class BottomNavigationHome extends StatelessWidget {
             ),
             title: const Text('Settings'),
           ),
+          // SalomonBottomBarItem(
+          //   selectedColor: Colors.greenAccent,
+          //   icon: const Icon(
+          //     Icons.shopping_bag_rounded,
+          //     size: 30,
+          //   ),
+          //   title: const Text('Orders'),
+          // ),
           SalomonBottomBarItem(
-            selectedColor: Colors.greenAccent,
+            selectedColor: Colors.cyan,
             icon: const Icon(
-              Icons.shopping_bag_rounded,
+              Icons.dashboard_customize,
               size: 30,
             ),
-            title: const Text('Orders'),
+            title: const Text('Custom'),
           ),
         ],
       ),
