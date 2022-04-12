@@ -1,13 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/email_login.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/login_wrapper.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/auth/password_login.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/posts/post_guard.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/deep_links/deep_link_page.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/posts/posts_page.dart';
 
 import '../routes/routes.gr.dart';
+import '../posts/post_guard.dart';
 
-void main() => runApp(AppWidget());
+void main() {
+  runApp(AppWidget());
+}
 
 class AppWidget extends StatefulWidget {
   AppWidget({Key? key}) : super(key: key);
@@ -22,19 +24,26 @@ class _AppWidgetState extends State<AppWidget> {
   var isLoggedIn = false;
 
   @override
-  Widget build(BuildContext context) {
-    // return const MaterialApp(
-    //   debugShowCheckedModeBanner: false,
-    //   title: 'Bottom Nav Bar with Nested Routing',
-    //   home: LoginWrapperPage(),
-    // );
+  void initState() {
+    initDynamicLinks();
+    super.initState();
+  }
 
-    return MaterialApp.router(
-      routeInformationParser: _appRouter.defaultRouteParser(),
-      routerDelegate: _appRouter.delegate(),
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bottom Nav Bar with Nested Routing',
+      home: PostsPage(),
+      routes: {'/settings': ((context) => const DeepLinkPage())},
     );
+
+    // return MaterialApp.router(
+    //   routeInformationParser: _appRouter.defaultRouteParser(),
+    //   routerDelegate: _appRouter.delegate(),
+    //   debugShowCheckedModeBanner: false,
+    //   title: 'Bottom Nav Bar with Nested Routing',
+    // );
 
     // return MaterialApp.router(
     //   routeInformationParser: _appRouter.defaultRouteParser(
@@ -52,6 +61,40 @@ class _AppWidgetState extends State<AppWidget> {
     //     ],
     //   ),
     // );
+  }
+
+  // intial function
+  void initDynamicLinks() async {
+    // if (!_isfirst) return;
+    // _isfirst = false;
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData? dynamicLinkData) async {
+      final Uri? deeplink = dynamicLinkData?.link;
+      if (deeplink != null) {
+        print("deeplink data " + deeplink.queryParameters.values.first);
+
+        print('/${deeplink.pathSegments.elementAt(1)}');
+
+        AutoRouter.of(context)
+            .navigateNamed('/${deeplink.pathSegments.elementAt(1)}');
+        // Navigator.of(context).pushNamed(deeplink.queryParameters.values.first);
+
+        //print('/${deeplink.pathSegments.elementAt(1)}');
+
+        //Navigator.pushNamed(context, '/${deeplink.pathSegments.elementAt(1)}');
+        // Navigator.push
+        // print("Should have done the work");
+        // setState(() {
+        //   _deepIndex = int.parse(deeplink.queryParameters.values.first);
+        //   print('This is the current index that should change' +
+        //       _deepIndex.toString());
+        // });
+      }
+      //  _changeisLoadingState();
+    }, onError: (OnLinkErrorException e) async {
+      print(e.message);
+      // _changeisLoadingState();
+    });
   }
 
   onResult(BuildContext context, bool isSuccess) {
