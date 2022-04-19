@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/deep_links/deep_link_page.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/posts/posts_page.dart';
 
