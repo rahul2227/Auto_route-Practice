@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/orders/order_history_page.dart';
 import 'package:provider/provider.dart';
 
 import '../Providers/order_inc.dart';

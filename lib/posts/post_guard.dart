@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/posts/invalid_post.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/routes/routes.gr.dart';
+import '../routes/routes.gr.dart';
 
 class PostGuard extends AutoRouteGuard {
   @override
