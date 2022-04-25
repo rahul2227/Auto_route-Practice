@@ -10,134 +10,274 @@
 //
 // ignore_for_file: type=lint
 
-import 'package:auto_route/auto_route.dart' as _i2;
-import 'package:flutter/material.dart' as _i8;
+import 'package:auto_route/auto_route.dart' as _i3;
+import 'package:flutter/material.dart' as _i17;
 
+import '../auth/email_page.dart' as _i15;
+import '../auth/loginwrapper_page.dart' as _i2;
+import '../auth/password_page.dart' as _i16;
 import '../bottom_navigation_home.dart' as _i1;
-import '../posts/posts_page.dart' as _i4;
-import '../posts/single_post_page.dart' as _i5;
-import '../settings/settings_page.dart' as _i3;
-import '../users/user_profile_page.dart' as _i7;
-import '../users/users_page.dart' as _i6;
+import '../Custom/custom_detail.dart' as _i14;
+import '../Custom/custom_route.dart' as _i13;
+import '../orders/order_history_page.dart' as _i12;
+import '../orders/order_page.dart' as _i11;
+import '../posts/invalid_post.dart' as _i8;
+import '../posts/post_guard.dart' as _i18;
+import '../posts/posts_page.dart' as _i6;
+import '../posts/single_post_page.dart' as _i7;
+import '../provider/order_wrapper.dart' as _i5;
+import '../settings/settings_page.dart' as _i4;
+import '../users/user_profile_page.dart' as _i10;
+import '../users/users_page.dart' as _i9;
+import 'routes.dart' as _i19;
 
-class NavigationRouter extends _i2.RootStackRouter {
-  NavigationRouter([_i8.GlobalKey<_i8.NavigatorState>? navigatorKey])
+class NavigationRouter extends _i3.RootStackRouter {
+  NavigationRouter(
+      {_i17.GlobalKey<_i17.NavigatorState>? navigatorKey,
+      required this.postGuard})
       : super(navigatorKey);
 
+  final _i18.PostGuard postGuard;
+
   @override
-  final Map<String, _i2.PageFactory> pagesMap = {
+  final Map<String, _i3.PageFactory> pagesMap = {
     BottomNavigationHome.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i1.BottomNavigationHome());
     },
+    LoginWrapperRoute.name: (routeData) {
+      final args = routeData.argsAs<LoginWrapperRouteArgs>();
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: _i2.LoginWrapperPage(key: args.key, onLogin: args.onLogin));
+    },
     PostsRouter.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i2.EmptyRouterPage());
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i3.EmptyRouterPage());
     },
     UsersRouter.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i2.EmptyRouterPage());
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i3.EmptyRouterPage());
     },
     SettingsRouter.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i3.SettingsPage());
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i4.SettingsPage());
+    },
+    OrdersWrapperPageRoute.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i5.OrdersWrapperPage());
+    },
+    DialogRouter.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i3.EmptyRouterPage());
     },
     PostsRoute.name: (routeData) {
       final args = routeData.argsAs<PostsRouteArgs>(
           orElse: () => const PostsRouteArgs());
-      return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i4.PostsPage(key: args.key));
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: _i6.PostsPage(key: args.key));
     },
     SinglePostRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<SinglePostRouteArgs>(
           orElse: () =>
               SinglePostRouteArgs(postId: pathParams.getInt('postId')));
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i5.SinglePostPage(key: args.key, postId: args.postId));
+          child: _i7.SinglePostPage(key: args.key, postId: args.postId));
+    },
+    InvalidPostRoute.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i8.InvalidPostPage());
     },
     UsersRoute.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i6.UsersPage());
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i9.UsersPage());
     },
     UserProfileRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<UserProfileRouteArgs>(
           orElse: () =>
               UserProfileRouteArgs(userId: pathParams.getInt('userId')));
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i7.UserProfilePage(key: args.key, userId: args.userId));
+          child: _i10.UserProfilePage(key: args.key, userId: args.userId));
+    },
+    OrderRoute.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i11.OrderPage());
+    },
+    OrderHistoryRoute.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i12.OrderHistory());
+    },
+    CustomRouteWrapper.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i13.CustomRouteWrapper());
+    },
+    CustomDetailRoute.name: (routeData) {
+      return _i3.CustomPage<dynamic>(
+          routeData: routeData,
+          child: const _i14.CustomDetail(),
+          transitionsBuilder: _i19.zoomInTransition,
+          opaque: true,
+          barrierDismissible: false);
+    },
+    EmailLoginRoute.name: (routeData) {
+      final args = routeData.argsAs<EmailLoginRouteArgs>();
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: _i15.EmailLoginPage(key: args.key, onNext: args.onNext));
+    },
+    PasswordLoginRoute.name: (routeData) {
+      final args = routeData.argsAs<PasswordLoginRouteArgs>();
+      return _i3.MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: _i16.PasswordLoginPage(key: args.key, onNext: args.onNext));
     }
   };
 
   @override
-  List<_i2.RouteConfig> get routes => [
-        _i2.RouteConfig(BottomNavigationHome.name, path: '/', children: [
-          _i2.RouteConfig(PostsRouter.name,
+  List<_i3.RouteConfig> get routes => [
+        _i3.RouteConfig(BottomNavigationHome.name, path: '/', children: [
+          _i3.RouteConfig(PostsRouter.name,
               path: 'posts',
               parent: BottomNavigationHome.name,
               children: [
-                _i2.RouteConfig(PostsRoute.name,
+                _i3.RouteConfig(PostsRoute.name,
                     path: '', parent: PostsRouter.name),
-                _i2.RouteConfig(SinglePostRoute.name,
-                    path: ':postId', parent: PostsRouter.name)
+                _i3.RouteConfig(SinglePostRoute.name,
+                    path: ':postId',
+                    parent: PostsRouter.name,
+                    guards: [postGuard]),
+                _i3.RouteConfig(InvalidPostRoute.name,
+                    path: 'invalidPostRoute', parent: PostsRouter.name)
               ]),
-          _i2.RouteConfig(UsersRouter.name,
+          _i3.RouteConfig(UsersRouter.name,
               path: 'users',
               parent: BottomNavigationHome.name,
               children: [
-                _i2.RouteConfig(UsersRoute.name,
+                _i3.RouteConfig(UsersRoute.name,
                     path: '', parent: UsersRouter.name),
-                _i2.RouteConfig(UserProfileRoute.name,
+                _i3.RouteConfig(UserProfileRoute.name,
                     path: ':userId', parent: UsersRouter.name)
               ]),
-          _i2.RouteConfig(SettingsRouter.name,
-              path: 'settings', parent: BottomNavigationHome.name)
+          _i3.RouteConfig(SettingsRouter.name,
+              path: 'settings', parent: BottomNavigationHome.name),
+          _i3.RouteConfig(OrdersWrapperPageRoute.name,
+              path: 'ordersWrapper',
+              parent: BottomNavigationHome.name,
+              children: [
+                _i3.RouteConfig(OrderRoute.name,
+                    path: '', parent: OrdersWrapperPageRoute.name),
+                _i3.RouteConfig(OrderHistoryRoute.name,
+                    path: 'orderHistory', parent: OrdersWrapperPageRoute.name)
+              ]),
+          _i3.RouteConfig(DialogRouter.name,
+              path: 'dialog',
+              parent: BottomNavigationHome.name,
+              children: [
+                _i3.RouteConfig(CustomRouteWrapper.name,
+                    path: '', parent: DialogRouter.name),
+                _i3.RouteConfig(CustomDetailRoute.name,
+                    path: 'customDetail', parent: DialogRouter.name)
+              ])
+        ]),
+        _i3.RouteConfig(LoginWrapperRoute.name, path: '/login', children: [
+          _i3.RouteConfig(EmailLoginRoute.name,
+              path: 'email-login-page', parent: LoginWrapperRoute.name),
+          _i3.RouteConfig(PasswordLoginRoute.name,
+              path: 'password-login-page', parent: LoginWrapperRoute.name)
         ])
       ];
 }
 
 /// generated route for
 /// [_i1.BottomNavigationHome]
-class BottomNavigationHome extends _i2.PageRouteInfo<void> {
-  const BottomNavigationHome({List<_i2.PageRouteInfo>? children})
+class BottomNavigationHome extends _i3.PageRouteInfo<void> {
+  const BottomNavigationHome({List<_i3.PageRouteInfo>? children})
       : super(BottomNavigationHome.name, path: '/', initialChildren: children);
 
   static const String name = 'BottomNavigationHome';
 }
 
 /// generated route for
-/// [_i2.EmptyRouterPage]
-class PostsRouter extends _i2.PageRouteInfo<void> {
-  const PostsRouter({List<_i2.PageRouteInfo>? children})
+/// [_i2.LoginWrapperPage]
+class LoginWrapperRoute extends _i3.PageRouteInfo<LoginWrapperRouteArgs> {
+  LoginWrapperRoute(
+      {_i17.Key? key,
+      required dynamic Function(bool) onLogin,
+      List<_i3.PageRouteInfo>? children})
+      : super(LoginWrapperRoute.name,
+            path: '/login',
+            args: LoginWrapperRouteArgs(key: key, onLogin: onLogin),
+            initialChildren: children);
+
+  static const String name = 'LoginWrapperRoute';
+}
+
+class LoginWrapperRouteArgs {
+  const LoginWrapperRouteArgs({this.key, required this.onLogin});
+
+  final _i17.Key? key;
+
+  final dynamic Function(bool) onLogin;
+
+  @override
+  String toString() {
+    return 'LoginWrapperRouteArgs{key: $key, onLogin: $onLogin}';
+  }
+}
+
+/// generated route for
+/// [_i3.EmptyRouterPage]
+class PostsRouter extends _i3.PageRouteInfo<void> {
+  const PostsRouter({List<_i3.PageRouteInfo>? children})
       : super(PostsRouter.name, path: 'posts', initialChildren: children);
 
   static const String name = 'PostsRouter';
 }
 
 /// generated route for
-/// [_i2.EmptyRouterPage]
-class UsersRouter extends _i2.PageRouteInfo<void> {
-  const UsersRouter({List<_i2.PageRouteInfo>? children})
+/// [_i3.EmptyRouterPage]
+class UsersRouter extends _i3.PageRouteInfo<void> {
+  const UsersRouter({List<_i3.PageRouteInfo>? children})
       : super(UsersRouter.name, path: 'users', initialChildren: children);
 
   static const String name = 'UsersRouter';
 }
 
 /// generated route for
-/// [_i3.SettingsPage]
-class SettingsRouter extends _i2.PageRouteInfo<void> {
+/// [_i4.SettingsPage]
+class SettingsRouter extends _i3.PageRouteInfo<void> {
   const SettingsRouter() : super(SettingsRouter.name, path: 'settings');
 
   static const String name = 'SettingsRouter';
 }
 
 /// generated route for
-/// [_i4.PostsPage]
-class PostsRoute extends _i2.PageRouteInfo<PostsRouteArgs> {
-  PostsRoute({_i8.Key? key})
+/// [_i5.OrdersWrapperPage]
+class OrdersWrapperPageRoute extends _i3.PageRouteInfo<void> {
+  const OrdersWrapperPageRoute({List<_i3.PageRouteInfo>? children})
+      : super(OrdersWrapperPageRoute.name,
+            path: 'ordersWrapper', initialChildren: children);
+
+  static const String name = 'OrdersWrapperPageRoute';
+}
+
+/// generated route for
+/// [_i3.EmptyRouterPage]
+class DialogRouter extends _i3.PageRouteInfo<void> {
+  const DialogRouter({List<_i3.PageRouteInfo>? children})
+      : super(DialogRouter.name, path: 'dialog', initialChildren: children);
+
+  static const String name = 'DialogRouter';
+}
+
+/// generated route for
+/// [_i6.PostsPage]
+class PostsRoute extends _i3.PageRouteInfo<PostsRouteArgs> {
+  PostsRoute({_i17.Key? key})
       : super(PostsRoute.name, path: '', args: PostsRouteArgs(key: key));
 
   static const String name = 'PostsRoute';
@@ -146,7 +286,7 @@ class PostsRoute extends _i2.PageRouteInfo<PostsRouteArgs> {
 class PostsRouteArgs {
   const PostsRouteArgs({this.key});
 
-  final _i8.Key? key;
+  final _i17.Key? key;
 
   @override
   String toString() {
@@ -155,9 +295,9 @@ class PostsRouteArgs {
 }
 
 /// generated route for
-/// [_i5.SinglePostPage]
-class SinglePostRoute extends _i2.PageRouteInfo<SinglePostRouteArgs> {
-  SinglePostRoute({_i8.Key? key, required int postId})
+/// [_i7.SinglePostPage]
+class SinglePostRoute extends _i3.PageRouteInfo<SinglePostRouteArgs> {
+  SinglePostRoute({_i17.Key? key, required int postId})
       : super(SinglePostRoute.name,
             path: ':postId',
             args: SinglePostRouteArgs(key: key, postId: postId),
@@ -169,7 +309,7 @@ class SinglePostRoute extends _i2.PageRouteInfo<SinglePostRouteArgs> {
 class SinglePostRouteArgs {
   const SinglePostRouteArgs({this.key, required this.postId});
 
-  final _i8.Key? key;
+  final _i17.Key? key;
 
   final int postId;
 
@@ -180,17 +320,26 @@ class SinglePostRouteArgs {
 }
 
 /// generated route for
-/// [_i6.UsersPage]
-class UsersRoute extends _i2.PageRouteInfo<void> {
+/// [_i8.InvalidPostPage]
+class InvalidPostRoute extends _i3.PageRouteInfo<void> {
+  const InvalidPostRoute()
+      : super(InvalidPostRoute.name, path: 'invalidPostRoute');
+
+  static const String name = 'InvalidPostRoute';
+}
+
+/// generated route for
+/// [_i9.UsersPage]
+class UsersRoute extends _i3.PageRouteInfo<void> {
   const UsersRoute() : super(UsersRoute.name, path: '');
 
   static const String name = 'UsersRoute';
 }
 
 /// generated route for
-/// [_i7.UserProfilePage]
-class UserProfileRoute extends _i2.PageRouteInfo<UserProfileRouteArgs> {
-  UserProfileRoute({_i8.Key? key, required int userId})
+/// [_i10.UserProfilePage]
+class UserProfileRoute extends _i3.PageRouteInfo<UserProfileRouteArgs> {
+  UserProfileRoute({_i17.Key? key, required int userId})
       : super(UserProfileRoute.name,
             path: ':userId',
             args: UserProfileRouteArgs(key: key, userId: userId),
@@ -202,12 +351,94 @@ class UserProfileRoute extends _i2.PageRouteInfo<UserProfileRouteArgs> {
 class UserProfileRouteArgs {
   const UserProfileRouteArgs({this.key, required this.userId});
 
-  final _i8.Key? key;
+  final _i17.Key? key;
 
   final int userId;
 
   @override
   String toString() {
     return 'UserProfileRouteArgs{key: $key, userId: $userId}';
+  }
+}
+
+/// generated route for
+/// [_i11.OrderPage]
+class OrderRoute extends _i3.PageRouteInfo<void> {
+  const OrderRoute() : super(OrderRoute.name, path: '');
+
+  static const String name = 'OrderRoute';
+}
+
+/// generated route for
+/// [_i12.OrderHistory]
+class OrderHistoryRoute extends _i3.PageRouteInfo<void> {
+  const OrderHistoryRoute()
+      : super(OrderHistoryRoute.name, path: 'orderHistory');
+
+  static const String name = 'OrderHistoryRoute';
+}
+
+/// generated route for
+/// [_i13.CustomRouteWrapper]
+class CustomRouteWrapper extends _i3.PageRouteInfo<void> {
+  const CustomRouteWrapper() : super(CustomRouteWrapper.name, path: '');
+
+  static const String name = 'CustomRouteWrapper';
+}
+
+/// generated route for
+/// [_i14.CustomDetail]
+class CustomDetailRoute extends _i3.PageRouteInfo<void> {
+  const CustomDetailRoute()
+      : super(CustomDetailRoute.name, path: 'customDetail');
+
+  static const String name = 'CustomDetailRoute';
+}
+
+/// generated route for
+/// [_i15.EmailLoginPage]
+class EmailLoginRoute extends _i3.PageRouteInfo<EmailLoginRouteArgs> {
+  EmailLoginRoute({_i17.Key? key, required Function onNext})
+      : super(EmailLoginRoute.name,
+            path: 'email-login-page',
+            args: EmailLoginRouteArgs(key: key, onNext: onNext));
+
+  static const String name = 'EmailLoginRoute';
+}
+
+class EmailLoginRouteArgs {
+  const EmailLoginRouteArgs({this.key, required this.onNext});
+
+  final _i17.Key? key;
+
+  final Function onNext;
+
+  @override
+  String toString() {
+    return 'EmailLoginRouteArgs{key: $key, onNext: $onNext}';
+  }
+}
+
+/// generated route for
+/// [_i16.PasswordLoginPage]
+class PasswordLoginRoute extends _i3.PageRouteInfo<PasswordLoginRouteArgs> {
+  PasswordLoginRoute({_i17.Key? key, required Function onNext})
+      : super(PasswordLoginRoute.name,
+            path: 'password-login-page',
+            args: PasswordLoginRouteArgs(key: key, onNext: onNext));
+
+  static const String name = 'PasswordLoginRoute';
+}
+
+class PasswordLoginRouteArgs {
+  const PasswordLoginRouteArgs({this.key, required this.onNext});
+
+  final _i17.Key? key;
+
+  final Function onNext;
+
+  @override
+  String toString() {
+    return 'PasswordLoginRouteArgs{key: $key, onNext: $onNext}';
   }
 }
