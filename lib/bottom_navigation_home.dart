@@ -43,7 +43,7 @@ class BottomNavigationHome extends StatelessWidget {
               Icons.person,
               size: 30,
             ),
-            title: const Text('Posts'),
+            title: const Text('User'),
           ),
           SalomonBottomBarItem(
             selectedColor: Colors.pinkAccent[100],
@@ -51,7 +51,7 @@ class BottomNavigationHome extends StatelessWidget {
               Icons.settings,
               size: 30,
             ),
-            title: const Text('Posts'),
+            title: const Text('Settings'),
           ),
         ],
       ),
