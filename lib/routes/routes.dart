@@ -7,7 +7,7 @@ import '../users/user_profile_page.dart';
 import '../users/users_page.dart';
 import '../bottom_navigation_home.dart';
 
-@MaterialAutoRouter(
+@AdaptiveAutoRouter(
   routes: <AutoRoute>[
     AutoRoute(
       path: '/',
